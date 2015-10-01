@@ -1,6 +1,6 @@
-class CreateAnswerGivens < ActiveRecord::Migration
+class CreateGivenAnswers < ActiveRecord::Migration
   def change
-    create_table :answer_givens do |t|
+    create_table :given_answers do |t|
       t.integer :user_id, index: true
       t.integer :question_id, index: true
       t.string :answer

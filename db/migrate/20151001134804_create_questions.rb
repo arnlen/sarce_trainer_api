@@ -5,7 +5,7 @@ class CreateQuestions < ActiveRecord::Migration
       t.text :answers, array: true, default: []
       t.text :correct_answers, array: true, default: []
       t.text :explanation
-      t.integer :repository_id
+      t.integer :repository_id, index: true
 
       t.timestamps
     end
