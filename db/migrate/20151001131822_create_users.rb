@@ -5,7 +5,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :last_name
       t.integer :rank_id
       t.string :cis
-      t.string :email
+      t.string :email, index: true
 
       t.timestamps
     end
