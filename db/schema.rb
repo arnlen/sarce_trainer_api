@@ -11,19 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151001134804) do
+ActiveRecord::Schema.define(version: 20151001135920) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "answer_givens", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "question_id"
-    t.string   "answer"
-    t.boolean  "is_correct"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
 
   create_table "daily_questions", force: :cascade do |t|
     t.integer  "question_id"
@@ -32,14 +23,26 @@ ActiveRecord::Schema.define(version: 20151001134804) do
     t.datetime "updated_at",     null: false
   end
 
+  create_table "given_answers", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "question_id"
+    t.string   "answer"
+    t.boolean  "is_correct"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["question_id"], name: "index_given_answers_on_question_id", using: :btree
+    t.index ["user_id"], name: "index_given_answers_on_user_id", using: :btree
+  end
+
   create_table "questions", force: :cascade do |t|
     t.string   "body"
-    t.text     "answers"
-    t.text     "correct_answers"
+    t.text     "answers",         default: [],              array: true
+    t.text     "correct_answers", default: [],              array: true
     t.text     "explanation"
     t.integer  "repository_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.index ["repository_id"], name: "index_questions_on_repository_id", using: :btree
   end
 
   create_table "ranks", force: :cascade do |t|
@@ -66,6 +69,7 @@ ActiveRecord::Schema.define(version: 20151001134804) do
     t.string   "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", using: :btree
   end
 
 end
